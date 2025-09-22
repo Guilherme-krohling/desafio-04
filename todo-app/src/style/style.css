@@ -1,0 +1,66 @@
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.tarefa-item {
+    transition: all 0.3s ease;
+    border-left: 4px solid #0d6efd;
+}
+
+.tarefa-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.tarefa-concluida {
+    border-left-color: #198754;
+    opacity: 0.8;
+}
+
+.tarefa-concluida .tarefa-titulo {
+    text-decoration: line-through;
+}
+
+.btn-action {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Novas regras para limitar o texto da descrição */
+.tarefa-descricao {
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+}
+
+/* Garantir que os botões fiquem visíveis e bem posicionados */
+.tarefa-botoes {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Para telas menores, ajustar o layout */
+@media (max-width: 576px) {
+    .tarefa-botoes {
+        justify-content: center;
+    }
+    
+    .tarefa-descricao {
+        -webkit-line-clamp: 2;
+    }
+}

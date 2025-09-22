@@ -31,35 +31,94 @@ $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minhas Tarefas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="container py-4">
-    <h1>Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?></h1>
-    <a href="logout.php" class="btn btn-danger btn-sm">Sair</a>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Sistema de Tarefas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="sair">Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <h2 class="mt-4">Adicionar Tarefa</h2>
-    <form method="post">
-        <input type="text" name="title" placeholder="Título" required class="form-control mb-2">
-        <textarea name="description" placeholder="Descrição" class="form-control mb-2"></textarea>
-        <button type="submit" class="btn btn-primary">Adicionar</button>
-    </form>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-body p-4">
+                        <h2 class="card-title text-center mb-4">Adicionar Nova Tarefa</h2>
+                        <form id="tarefaForm">
+                            <div class="mb-3">
+                                <label for="titulo" class="form-label">Título da Tarefa</label>
+                                <input type="text" class="form-control" id="titulo" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descricao" class="form-label">Descrição</label>
+                                <textarea class="form-control" id="descricao" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Adicionar Tarefa</button>
+                        </form>
+                    </div>
+                </div>
 
-    <h2 class="mt-4">Minhas Tarefas</h2>
-    <a href="?order=created_at">Ordenar por Data</a> | 
-    <a href="?order=status">Ordenar por Status</a>
-    <ul class="list-group mt-2">
-        <?php while ($row = $result->fetch_assoc()): ?>
-            <li class="list-group-item">
-                <strong><?php echo htmlspecialchars($row['title']); ?></strong>
-                - <?php echo htmlspecialchars($row['description']); ?>
-                - <em><?php echo $row['status']; ?></em>
-            </li>
-        <?php endwhile; ?>
-    </ul>
+                <div class="mt-5">
+                    <h3 class="mb-4">Minhas Tarefas</h3>
+                    <div id="listaTarefas">
+                        <!-- As tarefas serão adicionadas aqui via JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar tarefa -->
+    <div class="modal fade" id="editarTarefaModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Tarefa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editarTarefaForm">
+                        <input type="hidden" id="editId">
+                        <div class="mb-3">
+                            <label for="editTitulo" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="editTitulo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDescricao" class="form-label">Descrição</label>
+                            <textarea class="form-control" id="editDescricao" rows="3" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="salvarEdicao">Salvar Alterações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
