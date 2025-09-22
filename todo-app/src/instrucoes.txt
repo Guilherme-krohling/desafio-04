@@ -1,1 +1,0 @@
-Todos os arquivos PHP, HTML e CSS do projeto devem ser colocados dentro desta pasta SRC

@@ -1,14 +1,16 @@
 version: '3'
 services:
   web:
-    # image: php:apache
-    build: .
+    image: php:apache
+    #build: .
     ports:
       - "8080:80"
     volumes:
       - ./src:/var/www/html
     depends_on:
       - db
+    command: >
+      bash -c "docker-php-ext-install mysqli && apache2-foreground"
   db:
     image: mariadb
     environment:
@@ -18,5 +20,8 @@ services:
       MYSQL_PASSWORD: example_user_password
     volumes:
       - todo-data:/var/lib/mysql
+      - ./bd:/docker-entrypoint-initdb.d    # Adicione esta linha
+    ports:
+      - "3307:3306"
 volumes:
   todo-data:
