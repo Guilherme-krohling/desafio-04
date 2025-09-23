@@ -1,35 +1,46 @@
 <?php
 session_start();
 require 'connection.php';
-
+ 
 if (isset($_POST['select_usuario'])) {
-    $email = $_POST['emailLogin'];
-    $senha = $_POST['senhaLogin'];
-
-    // Busca o usuário pelo email
-    $sql = "SELECT id, name, password FROM users WHERE email = '$email' LIMIT 1";
-    $result = mysqli_query($conn, $sql);
-
+    $email = trim($_POST['emailLogin']);
+    $senha = trim($_POST['senhaLogin']);
+ 
+    // Busca o usuário pelo email usando prepared statement
+    $sql = "SELECT id, name, password FROM users WHERE email = ? LIMIT 1";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+ 
     if ($row = mysqli_fetch_assoc($result)) {
-        // Verificação simples: compara senha digitada com a do banco
-        if ($senha === $row['password']) {
+        // Verificação de senha (compatível com hash e texto plano)
+        $loginSuccessful = false;
+       
+        // Verifica se a senha no banco está em formato hash
+        if (password_get_info($row['password'])['algo'] !== null) {
+            // Senha está em hash - usa password_verify
+            $loginSuccessful = password_verify($senha, $row['password']);
+        } else {
+            // Senha está em texto plano - comparação direta
+            $loginSuccessful = ($senha === $row['password']);
+        }
+       
+        if ($loginSuccessful) {
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['user_name'] = $row['name'];
             header("Location: index.php");
             exit();
         } else {
             $_SESSION['mensagem'] = "Senha incorreta.";
-            header("Location: login.php");
-            exit();
         }
     } else {
         $_SESSION['mensagem'] = "Usuário não encontrado.";
-        header("Location: login.php");
-        exit();
     }
+    mysqli_stmt_close($stmt);
 }
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -45,7 +56,9 @@ if (isset($_POST['select_usuario'])) {
         <div class="card shadow-lg" style="width: 100%; max-width: 400px;">
             <div class="card-body p-4">
                 <h2 class="card-title text-center mb-4">Login</h2>
-
+ 
+                <?php include 'mensagem.php'; ?>
+ 
                 <form method="POST" action="">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>

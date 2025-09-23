@@ -1,19 +1,19 @@
 <?php
 session_start();
 require_once 'connection.php';
-
-// // Redireciona para login se não estiver logado
-// if (!isset($_SESSION['user_id'])) {
-//     header("Location: login.php");
-//     exit;
-// }
-
+ 
+// Redireciona para login se não estiver logado
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+ 
 // Adiciona nova tarefa
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['titulo'])) {
     $title = trim($_POST['titulo']);
     $desc = trim($_POST['descricao']);
-    //$userId = $_SESSION['user_id'];
-
+    $userId = $_SESSION['user_id']; // Moved here to be defined before use
+ 
     if ($title !== '') {
         $sql = $conn->prepare("INSERT INTO tasks (user_id, title, description) VALUES (?, ?, ?)");
         $sql->bind_param("iss", $userId, $title, $desc);
@@ -21,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['titulo'])) {
         $sql->close();
     }
 }
-
+ 
 // Ordenação
 $order = ($_GET['order'] ?? 'created_at') === 'status' ? 'status' : 'created_at';
-
+ 
 // Lista tarefas
 $userId = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id=? ORDER BY $order DESC");
@@ -32,7 +32,7 @@ $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -59,7 +59,7 @@ $result = $stmt->get_result();
             </div>
         </div>
     </nav>
-
+ 
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -79,7 +79,7 @@ $result = $stmt->get_result();
                         </form>
                     </div>
                 </div>
-
+ 
                 <div class="mt-5">
                     <h3 class="mb-4">Minhas Tarefas</h3>
                     <div id="listaTarefas">
@@ -89,7 +89,7 @@ $result = $stmt->get_result();
             </div>
         </div>
     </div>
-
+ 
     <!-- Modal para editar tarefa -->
     <div class="modal fade" id="editarTarefaModal" tabindex="-1">
         <div class="modal-dialog">
@@ -118,7 +118,7 @@ $result = $stmt->get_result();
             </div>
         </div>
     </div>
-
+ 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
 </body>

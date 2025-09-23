@@ -7,8 +7,11 @@ services:
       - "8080:80"
     volumes:
       - ./src:/var/www/html
+      - ./php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini
     depends_on:
       - db
+    environment:
+      - PHP_INI_SCAN_DIR=/usr/local/etc/php/conf.d
     command: >
       bash -c "docker-php-ext-install mysqli && apache2-foreground"
   db:
