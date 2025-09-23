@@ -33,7 +33,7 @@ require 'connection.php';
                     <div class="mb-3">
                         <label class="form-label">Senha</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="senhaCadastro" required>
+                            <input type="password" class="form-control" name="senhaCadastro" id="senhaCadastro" required>
                             <button class="btn btn-outline-secondary" type="button" id="toggleSenhaCadastro">
                                 <i class="bi bi-eye"></i>
                             </button>

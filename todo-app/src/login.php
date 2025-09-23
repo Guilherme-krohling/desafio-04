@@ -67,7 +67,7 @@ if (isset($_POST['select_usuario'])) {
                     <div class="mb-3">
                         <label for="senha" class="form-label">Senha</label>
                         <div class="input-group">
-                            <input type="password" class="form-control" name="senhaLogin" required>
+                            <input type="password" class="form-control" name="senhaLogin" id="senhaLogin" required>
                             <button class="btn btn-outline-secondary" type="button" id="toggleSenha">
                                 <i class="bi bi-eye"></i>
                             </button>

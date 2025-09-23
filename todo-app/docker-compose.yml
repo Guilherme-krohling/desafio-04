@@ -12,7 +12,7 @@ services:
       - db
     environment:
       - PHP_INI_SCAN_DIR=/usr/local/etc/php/conf.d
-    command: >
+    command:
       bash -c "docker-php-ext-install mysqli && apache2-foreground"
   db:
     image: mariadb

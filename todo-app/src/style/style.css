@@ -26,6 +26,9 @@ body {
     opacity: 0.8;
 }
 
+.tarefa-pendente {
+    border-left-color: #0d6efd;
+}
 .tarefa-concluida .tarefa-titulo {
     text-decoration: line-through;
 }
