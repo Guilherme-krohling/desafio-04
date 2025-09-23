@@ -22,16 +22,16 @@ CREATE TABLE IF NOT EXISTS tasks (
 
 
 -- Inserindo usuários de exemplo
-INSERT INTO users (name, email, password) VALUES
-('João Silva', 'joao@exemplo.com', '$2y$10$example_hash1'),
-('Maria Santos', 'maria@exemplo.com', '$2y$10$example_hash2'),
-('Pedro Oliveira', 'pedro@exemplo.com', '$2y$10$example_hash3');
+-- INSERT INTO users (name, email, password) VALUES
+-- ('João Silva', 'joao@exemplo.com', '123'),
+-- ('Maria Santos', 'maria@exemplo.com', '123'),
+-- ('Pedro Oliveira', 'pedro@exemplo.com', '123');
 
--- Inserindo tarefas de exemplo
-INSERT INTO tasks (user_id, title, description, status) VALUES
-(1, 'Completar relatório', 'Finalizar relatório mensal de vendas', 'pendente'),
-(1, 'Reunião com cliente', 'Preparar apresentação para reunião', 'pendente'),
-(2, 'Desenvolver API', 'Criar endpoints para novo sistema', 'finalizada'),
-(2, 'Revisar código', 'Fazer code review do PR#123', 'pendente'),
-(3, 'Backup do banco', 'Realizar backup semanal do banco de dados', 'pendente'),
-(3, 'Atualizar documentação', 'Documentar novas funcionalidades', 'finalizada');
+-- -- Inserindo tarefas de exemplo
+-- INSERT INTO tasks (user_id, title, description, status) VALUES
+-- (1, 'Completar relatório', 'Finalizar relatório mensal de vendas', 'pendente'),
+-- (1, 'Reunião com cliente', 'Preparar apresentação para reunião', 'pendente'),
+-- (2, 'Desenvolver API', 'Criar endpoints para novo sistema', 'finalizada'),
+-- (2, 'Revisar código', 'Fazer code review do PR#123', 'pendente'),
+-- (3, 'Backup do banco', 'Realizar backup semanal do banco de dados', 'pendente'),
+-- (3, 'Atualizar documentação', 'Documentar novas funcionalidades', 'finalizada');

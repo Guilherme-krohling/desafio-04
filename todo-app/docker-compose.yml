@@ -20,7 +20,7 @@ services:
       MYSQL_PASSWORD: example_user_password
     volumes:
       - todo-data:/var/lib/mysql
-      - ./bd:/docker-entrypoint-initdb.d    # Adicione esta linha
+      - ./bd:/docker-entrypoint-initdb.d
     ports:
       - "3307:3306"
 volumes:

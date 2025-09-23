@@ -2,22 +2,23 @@
 session_start();
 require_once 'connection.php';
 
-// Redireciona para login se não estiver logado
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
+// // Redireciona para login se não estiver logado
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: login.php");
+//     exit;
+// }
 
 // Adiciona nova tarefa
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
-    $title = trim($_POST['title']);
-    $desc = trim($_POST['description']);
-    $userId = $_SESSION['user_id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['titulo'])) {
+    $title = trim($_POST['titulo']);
+    $desc = trim($_POST['descricao']);
+    //$userId = $_SESSION['user_id'];
 
     if ($title !== '') {
-        $stmt = $conn->prepare("INSERT INTO tasks (user_id, title, description) VALUES (?, ?, ?)");
-        $stmt->bind_param("iss", $userId, $title, $desc);
-        $stmt->execute();
+        $sql = $conn->prepare("INSERT INTO tasks (user_id, title, description) VALUES (?, ?, ?)");
+        $sql->bind_param("iss", $userId, $title, $desc);
+        $sql->execute();
+        $sql->close();
     }
 }
 
@@ -65,14 +66,14 @@ $result = $stmt->get_result();
                 <div class="card shadow">
                     <div class="card-body p-4">
                         <h2 class="card-title text-center mb-4">Adicionar Nova Tarefa</h2>
-                        <form id="tarefaForm">
+                        <form id="tarefaForm" method="POST" action="">
                             <div class="mb-3">
                                 <label for="titulo" class="form-label">Título da Tarefa</label>
-                                <input type="text" class="form-control" id="titulo" required>
+                                <input type="text" class="form-control" name="titulo" required>
                             </div>
                             <div class="mb-3">
                                 <label for="descricao" class="form-label">Descrição</label>
-                                <textarea class="form-control" id="descricao" rows="3" required></textarea>
+                                <textarea class="form-control" name="descricao" rows="3" required></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Adicionar Tarefa</button>
                         </form>
