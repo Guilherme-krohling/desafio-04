@@ -6,7 +6,6 @@ if (isset($_POST['select_usuario'])) {
     $email = trim($_POST['emailLogin']);
     $senha = trim($_POST['senhaLogin']);
  
-    // Busca o usuário pelo email usando prepared statement
     $sql = "SELECT id, name, password FROM users WHERE email = ? LIMIT 1";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $email);
@@ -14,15 +13,11 @@ if (isset($_POST['select_usuario'])) {
     $result = mysqli_stmt_get_result($stmt);
  
     if ($row = mysqli_fetch_assoc($result)) {
-        // Verificação de senha (compatível com hash e texto plano)
         $loginSuccessful = false;
        
-        // Verifica se a senha no banco está em formato hash
         if (password_get_info($row['password'])['algo'] !== null) {
-            // Senha está em hash - usa password_verify
             $loginSuccessful = password_verify($senha, $row['password']);
         } else {
-            // Senha está em texto plano - comparação direta
             $loginSuccessful = ($senha === $row['password']);
         }
        

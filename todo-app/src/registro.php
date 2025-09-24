@@ -17,10 +17,8 @@ require 'connection.php';
             <div class="card-body p-4">
                 <h2 class="card-title text-center mb-4">Cadastro</h2>   
                 
-                <!-- novo arquivo -->
                 <?php include ('mensagem.php'); ?>
                 
-                <!-- esse action é novo -->
                 <form method="POST" action="acoes.php">
                     <div class="mb-3">
                         <label class="form-label">Nome Completo</label>

@@ -2,7 +2,6 @@
 session_start();
 require 'connection.php';
  
-// Redireciona para login se não estiver logado
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -10,9 +9,7 @@ if (!isset($_SESSION['user_id'])) {
  
 $userId = $_SESSION['user_id'];
  
-// Lógica para Ações do CRUD
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Adicionar nova tarefa
     if (isset($_POST['titulo']) && isset($_POST['descricao'])) {
         $title = trim($_POST['titulo']);
         $desc = trim($_POST['descricao']);
@@ -73,10 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
     exit;
 }
  
-// Ordenação
 $order = ($_GET['order'] ?? 'created_at') === 'status' ? 'status' : 'created_at';
  
-// Lista tarefas
 $stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id=? ORDER BY $order DESC");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -151,8 +146,6 @@ $result = $stmt->get_result();
                                     <div class="card-body">
                                         <h5 class="card-title tarefa-titulo mb-2"><?php echo htmlspecialchars($row['title']); ?></h5>
                                         <p class="card-text tarefa-descricao"><?php echo htmlspecialchars($row['description']); ?></p>
-
-                                        <!-- teste colocar novo campo na parte de listar -->
                                         <span class="badge <?php echo ($row['status'] === 'concluida') ? 'bg-success' : 'bg-secondary'; ?> mb-2"><?php echo ucfirst($row['status']); ?></span>
                                         <small class="text-muted d-block mb-2">Criada em: <?php echo date('d/m/Y H:i:s', strtotime($row['created_at'])); ?></small>
                                         <div class="tarefa-botoes">
@@ -214,7 +207,6 @@ $result = $stmt->get_result();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Lógica para preencher o modal de edição
         document.querySelectorAll('.editar-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
@@ -227,7 +219,6 @@ $result = $stmt->get_result();
             });
         });
  
-        // Botão sair
         const btnSair = document.getElementById('sair');
         if (btnSair) {
             btnSair.addEventListener('click', function() {

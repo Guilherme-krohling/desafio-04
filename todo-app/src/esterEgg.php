@@ -18,7 +18,7 @@
             <div class="card-body p-4 text-center">
                 <h2 class="card-title mb-4">Obrigado!</h2>   
                 <p class="easter-egg-text">
-                    Agradeço desde já a oportunidade de participar deste teste, independente do resultado. Foi uma ótima experiência, pprque tive a chance de usar Docker e Bootstrap de forma prática, ferramentas que eu estava pesquisando, mas ainda não tinha realmente utilizado.
+                    Agradeço desde já a oportunidade de participar deste teste, independente do resultado. Foi uma ótima experiência, porque tive a chance de usar Docker e Bootstrap de forma prática, ferramentas que eu estava pesquisando, mas ainda não tinha realmente utilizado.
                 </p>
                 <a href="index.php" class="btn btn-primary mt-3">Voltar para as Tarefas</a>
             </div>
