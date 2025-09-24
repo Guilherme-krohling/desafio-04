@@ -32,7 +32,14 @@ Se der algum erro quando for executar o comando docker-compose up. Verifique se 
 
 Após sucesso do comando docker o sistema estará acessível em http://localhost:8080.
 
+### Como verificar o banco de dados:
 
+Testar pelo terminal é uma das formas mais simples para uma verificação rápida, pois você não precisa de nenhuma ferramenta externa. Use o comando docker-compose exec para entrar no contêiner do banco de dados e executar comandos diretamente nele.
+
+        docker-compose exec db mariadb -utodo_user -pexample_user_password todo_db -e "SELECT * FROM users;"
+
+        docker-compose exec db mariadb -utodo_user -pexample_user_password todo_db -e "SELECT * FROM tasks;"
+        
 ---
 ###  📋 Funcionalidades
 
